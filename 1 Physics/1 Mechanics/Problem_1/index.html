@@ -177,35 +177,382 @@
 <p>Projectile motion, while seemingly simple, offers a rich playground for exploring fundamental principles of physics. The problem is straightforward: analyze how the range of a projectile depends on its angle of projection. Yet, beneath this simplicity lies a complex and versatile framework. The equations governing projectile motion involve both linear and quadratic relationships, making them accessible yet deeply insightful.</p>
 <p>What makes this topic particularly compelling is the number of free parameters involved in these equations, such as initial velocity, gravitational acceleration, and launch height. These parameters give rise to a diverse set of solutions that can describe a wide array of real-world phenomena, from the arc of a soccer ball to the trajectory of a rocket.</p>
 <h2 id="theoretical-foundation">Theoretical Foundation</h2>
-<h3 id="derivation-of-governing-equations">Derivation of Governing Equations</h3>
-<p>The motion of a projectile follows Newton's second law of motion. Considering motion in two perpendicular directions:</p>
 <ol>
-<li><strong>Horizontal Motion:</strong></li>
-<li>No acceleration (ignoring air resistance), so velocity remains constant.</li>
-<li>
-<p>Horizontal displacement: <span class="arithmatex">\(x = v_0 \cos(\theta) t\)</span></p>
-</li>
-<li>
-<p><strong>Vertical Motion:</strong></p>
-</li>
-<li>
-<p>Subject to gravitational acceleration <span class="arithmatex">\(g\)</span>.</p>
-</li>
-<li>
-<p>Vertical displacement: <span class="arithmatex">\(y = v_0 \sin(\theta) t - \frac{1}{2} g t^2\)</span></p>
-</li>
-<li>Time of flight: solving <span class="arithmatex">\(y = 0\)</span> gives <span class="arithmatex">\(t = \frac{2 v_0 \sin(\theta)}{g}\)</span>.</li>
+<li>Equations of Motion (Separating Motion into Components)
+Projectile motion follows the laws of kinematics, meaning we can break it into horizontal (x) and vertical (y) components.</li>
 </ol>
-<p>Using these equations, we derive the range formula:</p>
-<div class="arithmatex">\[
-R = \frac{v_0^2 \sin(2\theta)}{g}
-\]</div>
-<h3 id="influence-of-initial-conditions">Influence of Initial Conditions</h3>
-<ul>
-<li><strong>Initial Velocity (<span class="arithmatex">\(v_0\)</span>)</strong>: The range increases quadratically with <span class="arithmatex">\(v_0\)</span>, meaning a higher launch speed results in a longer range.</li>
-<li><strong>Angle of Projection (<span class="arithmatex">\(\theta\)</span>)</strong>: The maximum range occurs at <span class="arithmatex">\(\theta = 45^\circ\)</span>.</li>
-<li><strong>Gravitational Acceleration (<span class="arithmatex">\(g\)</span>)</strong>: A stronger gravitational pull decreases the range, as seen in environments like the Moon versus Earth.</li>
-</ul>
+<p>Horizontal Motion (Constant Velocity)
+There is no acceleration in the horizontal direction (if we neglect air resistance).</p>
+<p>The horizontal velocity remains constant:</p>
+<p>𝑣
+𝑥
+=
+𝑣
+0
+cos
+⁡
+𝜃
+v 
+x
+​
+ =v 
+0
+​
+ cosθ
+The horizontal displacement after time 
+𝑡
+t is:</p>
+<h1 id="x">𝑥</h1>
+<p>𝑣
+0
+cos
+⁡
+𝜃
+⋅
+𝑡
+x=v 
+0
+​
+ cosθ⋅t
+Vertical Motion (Accelerated Motion Due to Gravity)
+The vertical velocity changes due to gravitational acceleration 
+𝑔
+g.</p>
+<p>The initial vertical velocity is:</p>
+<p>𝑣
+𝑦
+=
+𝑣
+0
+sin
+⁡
+𝜃
+v 
+y
+​
+ =v 
+0
+​
+ sinθ
+The vertical displacement at any time 
+𝑡
+t follows the equation:</p>
+<h1 id="y">𝑦</h1>
+<p>𝑣
+0
+sin
+⁡
+𝜃
+⋅
+𝑡
+−
+1
+2
+𝑔
+𝑡
+2
+y=v 
+0
+​
+ sinθ⋅t− 
+2
+1
+​
+ gt 
+2</p>
+<p>The first term (
+𝑣
+0
+sin
+⁡
+𝜃
+⋅
+𝑡
+v 
+0
+​
+ sinθ⋅t) represents the upward motion due to initial velocity.</p>
+<p>The second term (
+1
+2
+𝑔
+𝑡
+2
+2
+1
+​
+ gt 
+2
+ ) accounts for the downward pull of gravity.</p>
+<ol>
+<li>Time of Flight (Total Time Until the Projectile Hits the Ground)
+The projectile lands when it reaches 
+𝑦
+=
+0
+y=0.
+Setting the vertical motion equation to zero:</li>
+</ol>
+<h1 id="0">0</h1>
+<p>𝑣
+0
+sin
+⁡
+𝜃
+⋅
+𝑡
+−
+1
+2
+𝑔
+𝑡
+2
+0=v 
+0
+​
+ sinθ⋅t− 
+2
+1
+​
+ gt 
+2</p>
+<p>Factoring out 
+𝑡
+t:</p>
+<p>𝑡
+(
+𝑣
+0
+sin
+⁡
+𝜃
+−
+1
+2
+𝑔
+𝑡
+)
+=
+0
+t(v 
+0
+​
+ sinθ− 
+2
+1
+​
+ gt)=0
+Solving for 
+𝑡
+t, we get two solutions:</p>
+<h1 id="t">𝑡</h1>
+<p>0
+t=0 (the moment the projectile is launched).</p>
+<h1 id="t_1">𝑡</h1>
+<p>2
+𝑣
+0
+sin
+⁡
+𝜃
+𝑔
+t= 
+g
+2v 
+0
+​
+ sinθ
+​
+  (the time when it lands back on the ground).</p>
+<p>So, the total time of flight is:</p>
+<h1 id="t_2">𝑇</h1>
+<p>2
+𝑣
+0
+sin
+⁡
+𝜃
+𝑔
+T= 
+g
+2v 
+0
+​
+ sinθ
+​</p>
+<ol>
+<li>Range Formula (Total Horizontal Distance Traveled)
+The range 
+𝑅
+R is the total horizontal distance covered before the projectile lands.</li>
+</ol>
+<p>From our horizontal motion equation:</p>
+<h1 id="x_1">𝑥</h1>
+<p>𝑣
+0
+cos
+⁡
+𝜃
+⋅
+𝑡
+x=v 
+0
+​
+ cosθ⋅t
+Substituting the total time of flight 
+𝑇
+T:</p>
+<h1 id="r">𝑅</h1>
+<p>𝑣
+0
+cos
+⁡
+𝜃
+×
+2
+𝑣
+0
+sin
+⁡
+𝜃
+𝑔
+R=v 
+0
+​
+ cosθ× 
+g
+2v 
+0
+​
+ sinθ
+​</p>
+<p>Rearranging:</p>
+<h1 id="r_1">𝑅</h1>
+<p>2
+𝑣
+0
+2
+sin
+⁡
+𝜃
+cos
+⁡
+𝜃
+𝑔
+R= 
+g
+2v 
+0
+2
+​
+ sinθcosθ
+​</p>
+<p>Using the trigonometric identity:</p>
+<p>2
+sin
+⁡
+𝜃
+cos
+⁡
+𝜃
+=
+sin
+⁡
+2
+𝜃
+2sinθcosθ=sin2θ
+We simplify the range equation to:</p>
+<h1 id="r_2">𝑅</h1>
+<p>𝑣
+0
+2
+sin
+⁡
+2
+𝜃
+𝑔
+R= 
+g
+v 
+0
+2
+​
+ sin2θ
+​</p>
+<p>Key Observations from the Range Formula
+Maximum Range:</p>
+<p>The function 
+sin
+⁡
+2
+𝜃
+sin2θ is maximum when 
+2
+𝜃
+=
+90
+∘
+2θ=90 
+∘</p>
+<p>So, the optimal angle for maximum range is 
+𝜃
+=
+45
+∘
+θ=45 
+∘
+ .</p>
+<p>The maximum range is:</p>
+<p>𝑅
+max
+=
+𝑣
+0
+2
+𝑔
+R 
+max
+​
+ = 
+g
+v 
+0
+2
+​</p>
+<p>​</p>
+<p>Doubling Initial Velocity 
+𝑣
+0
+v 
+0
+​
+  Quadruples the Range:
+Since 
+𝑅
+∝
+𝑣
+0
+2
+R∝v 
+0
+2
+​
+ , increasing 
+𝑣
+0
+v 
+0
+​
+  by 2 times increases 
+𝑅
+R by 4 times.</p>
+<p>Effect of Gravity:</p>
+<p>Higher gravity (
+𝑔
+g) reduces the range.</p>
+<p>Example: A projectile on the Moon (where 
+𝑔
+g is smaller) will travel farther than on Earth.</p>
 <h2 id="analysis-of-the-range">Analysis of the Range</h2>
 <h3 id="dependence-on-angle-of-projection">Dependence on Angle of Projection</h3>
 <p>The function <span class="arithmatex">\(R(\theta)\)</span> follows a sine curve due to <span class="arithmatex">\(\sin(2\theta)\)</span>. Key observations:
