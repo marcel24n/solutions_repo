@@ -10,32 +10,425 @@ What makes this topic particularly compelling is the number of free parameters i
 
 ## Theoretical Foundation
 
-### Derivation of Governing Equations
+1. Equations of Motion (Separating Motion into Components)
+Projectile motion follows the laws of kinematics, meaning we can break it into horizontal (x) and vertical (y) components.
 
-The motion of a projectile follows Newton's second law of motion. Considering motion in two perpendicular directions:
+Horizontal Motion (Constant Velocity)
+There is no acceleration in the horizontal direction (if we neglect air resistance).
 
-1. **Horizontal Motion:**
-   - No acceleration (ignoring air resistance), so velocity remains constant.
-   - Horizontal displacement: $x = v_0 \cos(\theta) t$
+The horizontal velocity remains constant:
 
-2. **Vertical Motion:**
-   - Subject to gravitational acceleration $g$.
+𝑣
+𝑥
+=
+𝑣
+0
+cos
+⁡
+𝜃
+v 
+x
+​
+ =v 
+0
+​
+ cosθ
+The horizontal displacement after time 
+𝑡
+t is:
+
+𝑥
+=
+𝑣
+0
+cos
+⁡
+𝜃
+⋅
+𝑡
+x=v 
+0
+​
+ cosθ⋅t
+Vertical Motion (Accelerated Motion Due to Gravity)
+The vertical velocity changes due to gravitational acceleration 
+𝑔
+g.
+
+The initial vertical velocity is:
+
+𝑣
+𝑦
+=
+𝑣
+0
+sin
+⁡
+𝜃
+v 
+y
+​
+ =v 
+0
+​
+ sinθ
+The vertical displacement at any time 
+𝑡
+t follows the equation:
+
+𝑦
+=
+𝑣
+0
+sin
+⁡
+𝜃
+⋅
+𝑡
+−
+1
+2
+𝑔
+𝑡
+2
+y=v 
+0
+​
+ sinθ⋅t− 
+2
+1
+​
+ gt 
+2
+ 
+The first term (
+𝑣
+0
+sin
+⁡
+𝜃
+⋅
+𝑡
+v 
+0
+​
+ sinθ⋅t) represents the upward motion due to initial velocity.
+
+The second term (
+1
+2
+𝑔
+𝑡
+2
+2
+1
+​
+ gt 
+2
+ ) accounts for the downward pull of gravity.
+
+2. Time of Flight (Total Time Until the Projectile Hits the Ground)
+The projectile lands when it reaches 
+𝑦
+=
+0
+y=0.
+Setting the vertical motion equation to zero:
+
+0
+=
+𝑣
+0
+sin
+⁡
+𝜃
+⋅
+𝑡
+−
+1
+2
+𝑔
+𝑡
+2
+0=v 
+0
+​
+ sinθ⋅t− 
+2
+1
+​
+ gt 
+2
+ 
+Factoring out 
+𝑡
+t:
+
+𝑡
+(
+𝑣
+0
+sin
+⁡
+𝜃
+−
+1
+2
+𝑔
+𝑡
+)
+=
+0
+t(v 
+0
+​
+ sinθ− 
+2
+1
+​
+ gt)=0
+Solving for 
+𝑡
+t, we get two solutions:
+
+𝑡
+=
+0
+t=0 (the moment the projectile is launched).
+
+𝑡
+=
+2
+𝑣
+0
+sin
+⁡
+𝜃
+𝑔
+t= 
+g
+2v 
+0
+​
+ sinθ
+​
+  (the time when it lands back on the ground).
+
+So, the total time of flight is:
+
+𝑇
+=
+2
+𝑣
+0
+sin
+⁡
+𝜃
+𝑔
+T= 
+g
+2v 
+0
+​
+ sinθ
+​
+ 
+3. Range Formula (Total Horizontal Distance Traveled)
+The range 
+𝑅
+R is the total horizontal distance covered before the projectile lands.
+
+From our horizontal motion equation:
+
+𝑥
+=
+𝑣
+0
+cos
+⁡
+𝜃
+⋅
+𝑡
+x=v 
+0
+​
+ cosθ⋅t
+Substituting the total time of flight 
+𝑇
+T:
+
+𝑅
+=
+𝑣
+0
+cos
+⁡
+𝜃
+×
+2
+𝑣
+0
+sin
+⁡
+𝜃
+𝑔
+R=v 
+0
+​
+ cosθ× 
+g
+2v 
+0
+​
+ sinθ
+​
+ 
+Rearranging:
+
+𝑅
+=
+2
+𝑣
+0
+2
+sin
+⁡
+𝜃
+cos
+⁡
+𝜃
+𝑔
+R= 
+g
+2v 
+0
+2
+​
+ sinθcosθ
+​
+ 
+Using the trigonometric identity:
+
+2
+sin
+⁡
+𝜃
+cos
+⁡
+𝜃
+=
+sin
+⁡
+2
+𝜃
+2sinθcosθ=sin2θ
+We simplify the range equation to:
+
+𝑅
+=
+𝑣
+0
+2
+sin
+⁡
+2
+𝜃
+𝑔
+R= 
+g
+v 
+0
+2
+​
+ sin2θ
+​
+ 
+Key Observations from the Range Formula
+Maximum Range:
+
+The function 
+sin
+⁡
+2
+𝜃
+sin2θ is maximum when 
+2
+𝜃
+=
+90
+∘
+2θ=90 
+∘
+ 
+
+So, the optimal angle for maximum range is 
+𝜃
+=
+45
+∘
+θ=45 
+∘
+ .
+
+The maximum range is:
+
+𝑅
+max
+=
+𝑣
+0
+2
+𝑔
+R 
+max
+​
+ = 
+g
+v 
+0
+2
+​
+ 
+​
+ 
+Doubling Initial Velocity 
+𝑣
+0
+v 
+0
+​
+  Quadruples the Range:
+Since 
+𝑅
+∝
+𝑣
+0
+2
+R∝v 
+0
+2
+​
+ , increasing 
+𝑣
+0
+v 
+0
+​
+  by 2 times increases 
+𝑅
+R by 4 times.
+
+Effect of Gravity:
+
+Higher gravity (
+𝑔
+g) reduces the range.
+
+Example: A projectile on the Moon (where 
+𝑔
+g is smaller) will travel farther than on Earth.
 
 
-   - Vertical displacement: $y = v_0 \sin(\theta) t - \frac{1}{2} g t^2$
-   - Time of flight: solving $y = 0$ gives $t = \frac{2 v_0 \sin(\theta)}{g}$.
-
-Using these equations, we derive the range formula:
-
-$$
-R = \frac{v_0^2 \sin(2\theta)}{g}
-$$
-
-### Influence of Initial Conditions
-
-- **Initial Velocity ($v_0$)**: The range increases quadratically with $v_0$, meaning a higher launch speed results in a longer range.
-- **Angle of Projection ($\theta$)**: The maximum range occurs at $\theta = 45^\circ$.
-- **Gravitational Acceleration ($g$)**: A stronger gravitational pull decreases the range, as seen in environments like the Moon versus Earth.
 
 ## Analysis of the Range
 
