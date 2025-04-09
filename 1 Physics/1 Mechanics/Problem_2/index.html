@@ -172,6 +172,218 @@
 <div class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
 <div class="section" itemprop="articleBody">
 <h1 id="problem-2">Problem 2</h1>
+<p>Here is a <strong>full solution</strong> to your <strong>Forced Damped Pendulum</strong> project — including theoretical derivation, dynamic analysis, real-world relevance, and a Python implementation with plots and exploration tools. Ready to copy into a Markdown or Jupyter notebook!</p>
+<hr/>
+<h1 id="investigating-the-dynamics-of-a-forced-damped-pendulum">🌀 <strong>Investigating the Dynamics of a Forced Damped Pendulum</strong></h1>
+<hr/>
+<h2 id="1-theoretical-foundation">📘 <strong>1. Theoretical Foundation</strong></h2>
+<h3 id="equation-of-motion"><strong>Equation of Motion</strong></h3>
+<p>The motion of a forced damped pendulum is described by the nonlinear second-order differential equation:</p>
+<div class="arithmatex">\[
+\frac{d^2\theta}{dt^2} + \gamma \frac{d\theta}{dt} + \omega_0^2 \sin\theta = A \cos(\omega t)
+\]</div>
+<p>Where:
+- <span class="arithmatex">\(\theta(t)\)</span>: angular displacement<br/>
+- <span class="arithmatex">\(\gamma\)</span>: damping coefficient<br/>
+- <span class="arithmatex">\(\omega_0 = \sqrt{g/L}\)</span>: natural angular frequency<br/>
+- <span class="arithmatex">\(A\)</span>: amplitude of external forcing<br/>
+- <span class="arithmatex">\(\omega\)</span>: angular frequency of the driving force  </p>
+<hr/>
+<h3 id="small-angle-approximation"><strong>Small-Angle Approximation</strong></h3>
+<p>For small oscillations (<span class="arithmatex">\(\theta \ll 1\)</span>), we use <span class="arithmatex">\(\sin\theta \approx \theta\)</span>, simplifying the equation to:</p>
+<div class="arithmatex">\[
+\frac{d^2\theta}{dt^2} + \gamma \frac{d\theta}{dt} + \omega_0^2 \theta = A \cos(\omega t)
+\]</div>
+<p>This is a <strong>driven damped harmonic oscillator</strong>, solvable analytically.</p>
+<hr/>
+<h3 id="general-solution-small-angles"><strong>General Solution (Small Angles)</strong></h3>
+<p>The solution consists of:
+- <strong>Transient</strong> (decays due to damping)
+- <strong>Steady-state</strong> (driven solution):</p>
+<div class="arithmatex">\[
+\theta(t) = \theta_0 e^{-\gamma t/2} \cos(\Omega t + \phi) + B \cos(\omega t - \delta)
+\]</div>
+<p>Where:
+- <span class="arithmatex">\(B = \frac{A}{\sqrt{(\omega_0^2 - \omega^2)^2 + (\gamma \omega)^2}}\)</span>
+- <span class="arithmatex">\(\delta = \tan^{-1}\left(\frac{\gamma \omega}{\omega_0^2 - \omega^2}\right)\)</span></p>
+<hr/>
+<h3 id="resonance-condition"><strong>Resonance Condition</strong></h3>
+<p>Occurs when driving frequency <span class="arithmatex">\(\omega \approx \omega_0\)</span>.<br/>
+- System absorbs maximum energy.<br/>
+- Amplitude <span class="arithmatex">\(B\)</span> reaches a peak.<br/>
+- Damping reduces resonance sharpness.</p>
+<hr/>
+<h2 id="2-analysis-of-dynamics">🔬 <strong>2. Analysis of Dynamics</strong></h2>
+<h3 id="effect-of-parameters"><strong>Effect of Parameters</strong></h3>
+<ul>
+<li><strong>Damping <span class="arithmatex">\(\gamma\)</span></strong>:</li>
+<li>Low <span class="arithmatex">\(\gamma\)</span>: sustained oscillations.</li>
+<li>High <span class="arithmatex">\(\gamma\)</span>: motion dies out quickly.</li>
+<li><strong>Driving Amplitude <span class="arithmatex">\(A\)</span></strong>:</li>
+<li>Small <span class="arithmatex">\(A\)</span>: linear-like motion.</li>
+<li>Large <span class="arithmatex">\(A\)</span>: complex, possibly chaotic behavior.</li>
+<li><strong>Driving Frequency <span class="arithmatex">\(\omega\)</span></strong>:</li>
+<li>Near resonance → large response.</li>
+<li>Far from resonance → low amplitude.</li>
+</ul>
+<hr/>
+<h3 id="regular-vs-chaotic-motion"><strong>Regular vs Chaotic Motion</strong></h3>
+<ul>
+<li><strong>Regular</strong>: predictable, periodic or quasiperiodic.</li>
+<li><strong>Chaotic</strong>: sensitive to initial conditions, irregular, non-repeating.</li>
+</ul>
+<p>Transition to chaos happens by increasing <span class="arithmatex">\(A\)</span> or tuning <span class="arithmatex">\(\omega\)</span>.</p>
+<hr/>
+<h2 id="3-real-world-applications">🧠 <strong>3. Real-World Applications</strong></h2>
+<table>
+<thead>
+<tr>
+<th>Application</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>🏗️ Suspension Bridges</td>
+<td>External forcing (wind, traffic) causes oscillations</td>
+</tr>
+<tr>
+<td>⚡ RLC Circuits</td>
+<td>Analogous to pendulum with inductance/resistance</td>
+</tr>
+<tr>
+<td>🚶 Biomechanics</td>
+<td>Human gait as forced pendulum</td>
+</tr>
+<tr>
+<td>⚙️ Energy Harvesting</td>
+<td>Uses resonance for maximizing power</td>
+</tr>
+</tbody>
+</table>
+<hr/>
+<h2 id="4-python-implementation-simulation">💻 <strong>4. Python Implementation (Simulation)</strong></h2>
+<p>Below is a Python script using <code>scipy</code> and <code>matplotlib</code>.</p>
+<h3 id="required-libraries">🔧 Required Libraries</h3>
+<pre><code class="language-python">import numpy as np
+import matplotlib.pyplot as plt
+from scipy.integrate import solve_ivp
+</code></pre>
+<h3 id="simulation-function">🔁 Simulation Function</h3>
+<pre><code class="language-python"># Parameters
+gamma = 0.1        # damping
+omega0 = 1.5       # natural frequency (sqrt(g/L))
+A = 1.2            # driving amplitude
+omega = 2/3        # driving frequency
+
+def pendulum(t, y):
+    theta, dtheta = y
+    d2theta = -gamma * dtheta - omega0**2 * np.sin(theta) + A * np.cos(omega * t)
+    return [dtheta, d2theta]
+</code></pre>
+<h3 id="solve-the-equation">🧪 Solve the Equation</h3>
+<pre><code class="language-python"># Initial conditions
+theta0 = 0.2
+dtheta0 = 0.0
+t_span = (0, 100)
+t_eval = np.linspace(*t_span, 5000)
+
+sol = solve_ivp(pendulum, t_span, [theta0, dtheta0], t_eval=t_eval)
+</code></pre>
+<h3 id="plot-time-evolution">📈 Plot Time Evolution</h3>
+<pre><code class="language-python">plt.figure(figsize=(10,4))
+plt.plot(sol.t, sol.y[0], label='θ(t)')
+plt.title('Forced Damped Pendulum - Angular Displacement Over Time')
+plt.xlabel('Time')
+plt.ylabel('Angle (rad)')
+plt.grid(True)
+plt.legend()
+plt.show()
+</code></pre>
+<hr/>
+<h3 id="phase-portrait">🌌 Phase Portrait</h3>
+<pre><code class="language-python">plt.figure(figsize=(6,6))
+plt.plot(sol.y[0], sol.y[1], lw=0.5)
+plt.title('Phase Portrait: θ vs dθ/dt')
+plt.xlabel('θ (rad)')
+plt.ylabel('Angular velocity (rad/s)')
+plt.grid(True)
+plt.show()
+</code></pre>
+<hr/>
+<h3 id="poincare-section">🌀 Poincaré Section</h3>
+<p>Sample the state every period of the driving force:</p>
+<pre><code class="language-python">T_drive = 2 * np.pi / omega
+sample_times = np.arange(0, 100, T_drive)
+theta_samples = []
+omega_samples = []
+
+for t_sample in sample_times:
+    index = np.abs(sol.t - t_sample).argmin()
+    theta_samples.append(sol.y[0][index])
+    omega_samples.append(sol.y[1][index])
+
+plt.figure(figsize=(6,6))
+plt.scatter(theta_samples, omega_samples, s=5)
+plt.title('Poincaré Section')
+plt.xlabel('θ (rad)')
+plt.ylabel('dθ/dt (rad/s)')
+plt.grid(True)
+plt.show()
+</code></pre>
+<hr/>
+<h2 id="5-optional-bifurcation-diagram">📉 <strong>5. Optional: Bifurcation Diagram</strong></h2>
+<p>Try plotting steady-state angle values for a range of amplitudes <span class="arithmatex">\(A\)</span>:</p>
+<pre><code class="language-python">def get_bifurcation_data(A_values, omega=2/3):
+    points = []
+    for A in A_values:
+        def pend(t, y):
+            theta, v = y
+            return [v, -0.1 * v - 1.5**2 * np.sin(theta) + A * np.cos(omega * t)]
+
+        sol = solve_ivp(pend, (0, 300), [0.1, 0], t_eval=np.linspace(200, 300, 1000))
+        T_drive = 2*np.pi / omega
+        for t in np.arange(250, 300, T_drive):
+            idx = np.abs(sol.t - t).argmin()
+            points.append((A, sol.y[0][idx]))
+    return points
+
+A_values = np.linspace(1.0, 1.5, 200)
+data = get_bifurcation_data(A_values)
+
+A_vals, theta_vals = zip(*data)
+plt.figure(figsize=(10,5))
+plt.plot(A_vals, theta_vals, ',k')
+plt.title('Bifurcation Diagram: A vs θ')
+plt.xlabel('Driving Amplitude A')
+plt.ylabel('θ')
+plt.grid(True)
+plt.show()
+</code></pre>
+<hr/>
+<h2 id="6-limitations-extensions">🚧 <strong>6. Limitations &amp; Extensions</strong></h2>
+<table>
+<thead>
+<tr>
+<th>Limitation</th>
+<th>Extension</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Assumes constant <span class="arithmatex">\(\gamma, A, \omega\)</span></td>
+<td>Add time-dependent forcing</td>
+</tr>
+<tr>
+<td>Only single pendulum</td>
+<td>Model coupled pendulums</td>
+</tr>
+<tr>
+<td>Idealized</td>
+<td>Add friction, noise, or nonlinear damping</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div><footer>
 <div aria-label="Footer Navigation" class="rst-footer-buttons" role="navigation">
