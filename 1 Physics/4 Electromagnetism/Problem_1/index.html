@@ -72,6 +72,36 @@
 <ul class="current">
 <li class="toctree-l2 current"><a class="reference internal current" href="#">Problem 1</a>
 <ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="#1-the-lorentz-force">🧲 1. The Lorentz Force</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#2-simulation-strategy">🧮 2. Simulation Strategy</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#3-python-simulation-charged-particle-in-uniform-vecb-and-vece">🧪 3. Python Simulation: Charged Particle in Uniform \( \vec{B} \) and \( \vec{E} \)</a>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#basic-configuration">✅ Basic Configuration</a>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#4-visualization">📊 4. Visualization</a>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#2d-view-eg-x-y-plane-motion">2D View (e.g., x-y plane motion):</a>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#3d-trajectory-if-motion-in-z-is-involved">3D Trajectory (if motion in z is involved):</a>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#5-what-youll-observe">🌀 5. What You’ll Observe</a>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#larmor-radius">🔍 Larmor radius:</a>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#cyclotron-frequency">🔁 Cyclotron frequency:</a>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#6-parameter-exploration">🔄 6. Parameter Exploration</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#7-deliverables-recap">📦 7. Deliverables Recap</a>
+</li>
 </ul>
 </li>
 </ul>
@@ -172,6 +202,122 @@
 <div class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
 <div class="section" itemprop="articleBody">
 <h1 id="problem-1">Problem 1</h1>
+<hr/>
+<h2 id="1-the-lorentz-force">🧲 1. <strong>The Lorentz Force</strong></h2>
+<p>The Lorentz force is given by:
+[
+\vec{F} = q (\vec{E} + \vec{v} \times \vec{B})
+]</p>
+<p>Where:
+- <span class="arithmatex">\( \vec{F} \)</span>: Force on a particle
+- <span class="arithmatex">\( q \)</span>: Charge of the particle
+- <span class="arithmatex">\( \vec{v} \)</span>: Velocity
+- <span class="arithmatex">\( \vec{E} \)</span>: Electric field
+- <span class="arithmatex">\( \vec{B} \)</span>: Magnetic field</p>
+<p>This force governs the motion of <strong>charged particles</strong> in electric and magnetic fields — seen in <strong>plasma physics</strong>, <strong>mass spectrometry</strong>, <strong>cyclotrons</strong>, <strong>fusion reactors</strong>, etc.</p>
+<hr/>
+<h2 id="2-simulation-strategy">🧮 2. <strong>Simulation Strategy</strong></h2>
+<p>We solve Newton’s second law:
+[
+m \frac{d\vec{v}}{dt} = q(\vec{E} + \vec{v} \times \vec{B})
+]
+Use <strong>numerical integration</strong> (e.g., <strong>Euler</strong> or <strong>RK4</strong>) to compute the path.</p>
+<hr/>
+<h2 id="3-python-simulation-charged-particle-in-uniform-vecb-and-vece">🧪 3. <strong>Python Simulation: Charged Particle in Uniform <span class="arithmatex">\( \vec{B} \)</span> and <span class="arithmatex">\( \vec{E} \)</span></strong></h2>
+<p>We’ll start with:
+- A <strong>uniform magnetic field</strong> <span class="arithmatex">\( \vec{B} = B \hat{z} \)</span>
+- Optional electric field <span class="arithmatex">\( \vec{E} = E \hat{y} \)</span>
+- Initial velocity <span class="arithmatex">\( \vec{v}_0 \)</span></p>
+<h3 id="basic-configuration">✅ Basic Configuration</h3>
+<pre><code class="language-python">import numpy as np
+import matplotlib.pyplot as plt
+
+# Physical constants
+q = 1.6e-19     # charge of particle (C)
+m = 9.11e-31    # mass of particle (kg)
+B = np.array([0, 0, 1.0])   # magnetic field (T)
+E = np.array([0.0, 0.0, 0.0])   # electric field (V/m)
+
+# Initial conditions
+v0 = np.array([1e6, 0.0, 0.0])    # initial velocity (m/s)
+r0 = np.array([0.0, 0.0, 0.0])    # initial position (m)
+
+# Simulation parameters
+dt = 1e-11     # time step (s)
+steps = 2000   # number of steps
+
+# Storage
+positions = np.zeros((steps, 3))
+velocities = np.zeros((steps, 3))
+r = r0.copy()
+v = v0.copy()
+
+# Numerical integration (Euler)
+for i in range(steps):
+    F = q * (E + np.cross(v, B))
+    a = F / m
+    v += a * dt
+    r += v * dt
+    positions[i] = r
+    velocities[i] = v
+</code></pre>
+<hr/>
+<h2 id="4-visualization">📊 4. <strong>Visualization</strong></h2>
+<h3 id="2d-view-eg-x-y-plane-motion">2D View (e.g., x-y plane motion):</h3>
+<pre><code class="language-python">plt.figure(figsize=(8, 6))
+plt.plot(positions[:, 0], positions[:, 1])
+plt.title('Charged Particle Trajectory in Magnetic Field (XY Plane)')
+plt.xlabel('x (m)')
+plt.ylabel('y (m)')
+plt.axis('equal')
+plt.grid(True)
+plt.show()
+</code></pre>
+<h3 id="3d-trajectory-if-motion-in-z-is-involved">3D Trajectory (if motion in z is involved):</h3>
+<pre><code class="language-python">from mpl_toolkits.mplot3d import Axes3D
+
+fig = plt.figure(figsize=(10, 7))
+ax = fig.add_subplot(111, projection='3d')
+ax.plot(positions[:,0], positions[:,1], positions[:,2])
+ax.set_title('3D Trajectory of Charged Particle')
+ax.set_xlabel('X (m)')
+ax.set_ylabel('Y (m)')
+ax.set_zlabel('Z (m)')
+plt.show()
+</code></pre>
+<hr/>
+<h2 id="5-what-youll-observe">🌀 5. <strong>What You’ll Observe</strong></h2>
+<ul>
+<li>With <strong>only <span class="arithmatex">\( \vec{B} \)</span></strong> and initial perpendicular <span class="arithmatex">\( \vec{v} \)</span>: the particle makes a <strong>circular</strong> path (due to centripetal magnetic force).</li>
+<li>Add a <strong>parallel <span class="arithmatex">\( \vec{v}_z \)</span></strong>: <strong>helical trajectory</strong>.</li>
+<li>Add a <strong>crossed electric field <span class="arithmatex">\( \vec{E} \perp \vec{B} \)</span></strong>: the particle <strong>drifts</strong> at constant velocity.</li>
+</ul>
+<h3 id="larmor-radius">🔍 Larmor radius:</h3>
+<div class="arithmatex">\[
+r_L = \frac{mv_\perp}{|q|B}
+\]</div>
+<h3 id="cyclotron-frequency">🔁 Cyclotron frequency:</h3>
+<div class="arithmatex">\[
+\omega_c = \frac{|q|B}{m}
+\]</div>
+<hr/>
+<h2 id="6-parameter-exploration">🔄 6. <strong>Parameter Exploration</strong></h2>
+<p>Try modifying:
+- Mass/charge (e.g., <strong>electrons vs protons</strong>)
+- Magnetic field direction or strength
+- Electric field strength
+- Initial velocity angle (see circular vs helical paths)
+- Try <strong>crossed E and B fields</strong> to show <strong>E×B drift</strong></p>
+<hr/>
+<h2 id="7-deliverables-recap">📦 7. <strong>Deliverables Recap</strong></h2>
+<ul>
+<li>✅ Python simulation of charged particle motion under Lorentz force</li>
+<li>✅ 2D and 3D trajectory plots</li>
+<li>✅ Physical explanations (e.g., cyclotron motion, drift, helices)</li>
+<li>✅ Ready to export as Markdown or Jupyter Notebook</li>
+<li>✅ Links to real systems like cyclotrons, Hall thrusters, and plasma containment</li>
+</ul>
+<hr/>
 </div>
 </div><footer>
 <div aria-label="Footer Navigation" class="rst-footer-buttons" role="navigation">
