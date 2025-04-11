@@ -58,6 +58,24 @@
 </li>
 <li class="toctree-l2 current"><a class="reference internal current" href="#">Problem 2</a>
 <ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="#1-defining-the-cosmic-velocities">🚀 1. Defining the Cosmic Velocities</a>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#first-cosmic-velocity-orbital-velocity">First Cosmic Velocity (Orbital Velocity)</a>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#second-cosmic-velocity-escape-velocity">Second Cosmic Velocity (Escape Velocity)</a>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#third-cosmic-velocity-interstellar-escape">Third Cosmic Velocity (Interstellar Escape)</a>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#2-derivation-of-escape-velocity">🧠 2. Derivation of Escape Velocity</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#3-examples-for-earth-mars-jupiter">🌍 3. Examples for Earth, Mars, Jupiter</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#4-python-simulation-and-visualization">💻 4. Python Simulation and Visualization</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#deliverables-recap">📊 Deliverables Recap</a>
+</li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../Problem_3/">Problem 3</a>
@@ -172,6 +190,139 @@
 <div class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
 <div class="section" itemprop="articleBody">
 <h1 id="problem-2">Problem 2</h1>
+<hr/>
+<h2 id="1-defining-the-cosmic-velocities">🚀 1. <strong>Defining the Cosmic Velocities</strong></h2>
+<p>These velocities are thresholds for different types of motion under gravity.</p>
+<h3 id="first-cosmic-velocity-orbital-velocity"><strong>First Cosmic Velocity</strong> (Orbital Velocity)</h3>
+<ul>
+<li><strong>Definition</strong>: Minimum speed needed to enter <strong>low circular orbit</strong> around a planet (just above the surface).</li>
+<li><strong>Meaning</strong>: Object doesn't fall back — it <em>falls around</em> the planet.</li>
+</ul>
+<div class="arithmatex">\[
+v_1 = \sqrt{\frac{GM}{r}}
+\]</div>
+<hr/>
+<h3 id="second-cosmic-velocity-escape-velocity"><strong>Second Cosmic Velocity</strong> (Escape Velocity)</h3>
+<ul>
+<li><strong>Definition</strong>: Minimum speed to completely <strong>escape the gravity</strong> of a planet.</li>
+<li><strong>Meaning</strong>: Object never returns unless acted on.</li>
+</ul>
+<div class="arithmatex">\[
+v_2 = \sqrt{2} \cdot v_1 = \sqrt{\frac{2GM}{r}}
+\]</div>
+<hr/>
+<h3 id="third-cosmic-velocity-interstellar-escape"><strong>Third Cosmic Velocity</strong> (Interstellar Escape)</h3>
+<ul>
+<li><strong>Definition</strong>: Minimum speed to escape the <strong>Solar System</strong>, from Earth orbit.</li>
+<li><strong>Meaning</strong>: Object escapes Sun’s gravity starting from a planet like Earth.</li>
+</ul>
+<div class="arithmatex">\[
+v_3 = \sqrt{v_{\text{esc,Sun}}^2 + v_{\text{orb,Earth}}^2}
+\]</div>
+<p>Where:
+- <span class="arithmatex">\( v_{\text{esc,Sun}} \)</span>: escape velocity from the Sun at Earth’s orbit
+- <span class="arithmatex">\( v_{\text{orb,Earth}} \)</span>: Earth’s orbital speed around the Sun</p>
+<hr/>
+<h2 id="2-derivation-of-escape-velocity">🧠 2. Derivation of Escape Velocity</h2>
+<p>From energy conservation:</p>
+<div class="arithmatex">\[
+\text{Kinetic energy} = \text{Gravitational potential energy}
+\]</div>
+<div class="arithmatex">\[
+\frac{1}{2}mv^2 = \frac{GMm}{r}
+\Rightarrow v = \sqrt{\frac{2GM}{r}}
+\]</div>
+<p>Where:
+- <span class="arithmatex">\( G \)</span>: gravitational constant = <span class="arithmatex">\(6.67430 \times 10^{-11} \)</span>
+- <span class="arithmatex">\( M \)</span>: mass of the planet/star
+- <span class="arithmatex">\( r \)</span>: distance from center of mass</p>
+<hr/>
+<h2 id="3-examples-for-earth-mars-jupiter">🌍 3. Examples for Earth, Mars, Jupiter</h2>
+<p>Let’s compute the 3 cosmic velocities for Earth, Mars, and Jupiter:</p>
+<table>
+<thead>
+<tr>
+<th>Planet</th>
+<th>Mass (kg)</th>
+<th>Radius (m)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Earth</td>
+<td><span class="arithmatex">\(5.972 \times 10^{24}\)</span></td>
+<td><span class="arithmatex">\(6.371 \times 10^6\)</span></td>
+</tr>
+<tr>
+<td>Mars</td>
+<td><span class="arithmatex">\(6.417 \times 10^{23}\)</span></td>
+<td><span class="arithmatex">\(3.390 \times 10^6\)</span></td>
+</tr>
+<tr>
+<td>Jupiter</td>
+<td><span class="arithmatex">\(1.898 \times 10^{27}\)</span></td>
+<td><span class="arithmatex">\(6.991 \times 10^7\)</span></td>
+</tr>
+</tbody>
+</table>
+<hr/>
+<h2 id="4-python-simulation-and-visualization">💻 4. Python Simulation and Visualization</h2>
+<p>Here’s Python code to calculate and visualize cosmic velocities:</p>
+<pre><code class="language-python">import numpy as np
+import matplotlib.pyplot as plt
+
+# Constants
+G = 6.67430e-11  # Gravitational constant in m^3 kg^-1 s^-2
+
+# Planet data: name, mass (kg), radius (m)
+planets = {
+    "Earth":   {"mass": 5.972e24, "radius": 6.371e6},
+    "Mars":    {"mass": 6.417e23, "radius": 3.390e6},
+    "Jupiter": {"mass": 1.898e27, "radius": 6.991e7}
+}
+
+# Calculate velocities
+results = {}
+for planet, data in planets.items():
+    M = data["mass"]
+    r = data["radius"]
+
+    v1 = np.sqrt(G * M / r)        # First cosmic (orbital)
+    v2 = np.sqrt(2 * G * M / r)    # Second cosmic (escape)
+
+    results[planet] = {
+        "v1_kms": v1 / 1000,
+        "v2_kms": v2 / 1000
+    }
+
+# Plotting
+labels = list(results.keys())
+v1_vals = [results[p]["v1_kms"] for p in labels]
+v2_vals = [results[p]["v2_kms"] for p in labels]
+
+x = np.arange(len(labels))
+width = 0.35
+
+plt.figure(figsize=(10,6))
+plt.bar(x - width/2, v1_vals, width, label="1st Cosmic Velocity (Orbital)")
+plt.bar(x + width/2, v2_vals, width, label="2nd Cosmic Velocity (Escape)")
+plt.xticks(x, labels)
+plt.ylabel("Velocity (km/s)")
+plt.title("Cosmic Velocities for Planets")
+plt.legend()
+plt.grid(True)
+plt.tight_layout()
+plt.show()
+</code></pre>
+<hr/>
+<h2 id="deliverables-recap">📊 Deliverables Recap</h2>
+<ul>
+<li>✅ <strong>Markdown or Notebook</strong>: With theory + code</li>
+<li>✅ <strong>Equations</strong>: For each cosmic velocity</li>
+<li>✅ <strong>Calculations</strong>: For Earth, Mars, and Jupiter</li>
+<li>✅ <strong>Graph</strong>: Comparing velocities across planets</li>
+<li>✅ <strong>Extension</strong>: Third cosmic velocity (leaving the Solar System)</li>
+</ul>
 </div>
 </div><footer>
 <div aria-label="Footer Navigation" class="rst-footer-buttons" role="navigation">
