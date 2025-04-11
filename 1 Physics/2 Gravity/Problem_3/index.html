@@ -60,6 +60,28 @@
 </li>
 <li class="toctree-l2 current"><a class="reference internal current" href="#">Problem 3</a>
 <ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="#1-theoretical-overview-payload-trajectories-near-earth">🌍 1. Theoretical Overview: Payload Trajectories Near Earth</a>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#types-of-trajectories">Types of Trajectories:</a>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#2-governing-equations">⚙️ 2. Governing Equations</a>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#newtons-law-of-gravitation">Newton’s Law of Gravitation:</a>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#well-numerically-solve">We’ll numerically solve:</a>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#3-python-simulation-visualizing-payload-trajectories">📊 3. Python Simulation: Visualizing Payload Trajectories</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#4-key-observations">📘 4. Key Observations</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#5-applications">💼 5. Applications</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#deliverables-recap">📂 Deliverables Recap</a>
+</li>
 </ul>
 </li>
 </ul>
@@ -172,6 +194,175 @@
 <div class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
 <div class="section" itemprop="articleBody">
 <h1 id="problem-3">Problem 3</h1>
+<hr/>
+<h2 id="1-theoretical-overview-payload-trajectories-near-earth">🌍 1. <strong>Theoretical Overview: Payload Trajectories Near Earth</strong></h2>
+<h3 id="types-of-trajectories">Types of Trajectories:</h3>
+<p>When a payload is released from a moving spacecraft near Earth, its trajectory depends on its <strong>initial velocity vector</strong> relative to Earth. It will follow one of these conic sections:</p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Speed Relative to Escape Velocity</th>
+<th>Orbit Shape</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Circular</strong></td>
+<td>Exactly orbital speed</td>
+<td>Circle</td>
+</tr>
+<tr>
+<td><strong>Elliptical</strong></td>
+<td>Less than escape speed</td>
+<td>Ellipse</td>
+</tr>
+<tr>
+<td><strong>Parabolic</strong></td>
+<td>Exactly escape speed</td>
+<td>Parabola</td>
+</tr>
+<tr>
+<td><strong>Hyperbolic</strong></td>
+<td>Greater than escape speed</td>
+<td>Hyperbola</td>
+</tr>
+<tr>
+<td><strong>Suborbital</strong></td>
+<td>Too low to complete an orbit</td>
+<td>Falls to Earth</td>
+</tr>
+</tbody>
+</table>
+<hr/>
+<h2 id="2-governing-equations">⚙️ 2. Governing Equations</h2>
+<h3 id="newtons-law-of-gravitation">Newton’s Law of Gravitation:</h3>
+<div class="arithmatex">\[
+\vec{F} = - \frac{G M m}{r^2} \hat{r}
+\]</div>
+<p>This leads to an <strong>acceleration</strong> toward Earth’s center:
+[
+\vec{a} = -\frac{G M}{r^2} \hat{r}
+]</p>
+<p>Where:
+- <span class="arithmatex">\( G = 6.674 \times 10^{-11} \, \text{Nm}^2/\text{kg}^2 \)</span>
+- <span class="arithmatex">\( M = 5.972 \times 10^{24} \, \text{kg} \)</span>
+- <span class="arithmatex">\( r \)</span>: distance from Earth's center
+- <span class="arithmatex">\( \hat{r} \)</span>: unit vector pointing from object to Earth's center</p>
+<h3 id="well-numerically-solve">We’ll numerically solve:</h3>
+<ul>
+<li><span class="arithmatex">\( \frac{d\vec{v}}{dt} = \vec{a} \)</span></li>
+<li><span class="arithmatex">\( \frac{d\vec{r}}{dt} = \vec{v} \)</span></li>
+</ul>
+<p>Using the <strong>Euler</strong> or <strong>RK4</strong> method.</p>
+<hr/>
+<h2 id="3-python-simulation-visualizing-payload-trajectories">📊 3. Python Simulation: Visualizing Payload Trajectories</h2>
+<p>We'll use this to simulate the motion of a payload from different speeds at a set altitude.</p>
+<pre><code class="language-python">import numpy as np
+import matplotlib.pyplot as plt
+
+# Constants
+G = 6.67430e-11      # Gravitational constant
+M = 5.972e24         # Mass of Earth
+R_earth = 6.371e6    # Radius of Earth (m)
+
+# Simulation parameters
+dt = 1               # time step (s)
+total_time = 10000   # total simulation time (s)
+steps = int(total_time / dt)
+
+def simulate_trajectory(v0, angle_deg, altitude):
+    # Initial conditions
+    r0 = R_earth + altitude
+    theta = np.radians(angle_deg)
+    pos = np.array([r0, 0])
+    vel = v0 * np.array([0, 1])  # Launch tangentially
+
+    positions = []
+
+    for _ in range(steps):
+        r = np.linalg.norm(pos)
+        if r &lt; R_earth:  # Hit Earth
+            break
+        a = -G * M / r**3 * pos
+        vel += a * dt
+        pos += vel * dt
+        positions.append(pos.copy())
+
+    return np.array(positions)
+
+# Simulate various speeds at 300 km altitude
+altitude = 300e3
+v_circular = np.sqrt(G * M / (R_earth + altitude))
+v_escape = np.sqrt(2) * v_circular
+
+velocities = [0.8 * v_circular, v_circular, 1.1 * v_circular, v_escape]
+labels = ['Suborbital', 'Circular', 'Elliptical', 'Escape']
+
+# Plotting
+plt.figure(figsize=(8, 8))
+for v, label in zip(velocities, labels):
+    traj = simulate_trajectory(v, 90, altitude)
+    plt.plot(traj[:,0]/1e6, traj[:,1]/1e6, label=label)
+
+# Draw Earth
+earth = plt.Circle((0, 0), R_earth/1e6, color='skyblue', alpha=0.5)
+plt.gca().add_patch(earth)
+
+plt.xlabel("x position (Mm)")
+plt.ylabel("y position (Mm)")
+plt.title("Payload Trajectories from Low Earth Orbit")
+plt.axis('equal')
+plt.grid(True)
+plt.legend()
+plt.tight_layout()
+plt.show()
+</code></pre>
+<hr/>
+<h2 id="4-key-observations">📘 4. Key Observations</h2>
+<ul>
+<li>Speeds <strong>&lt; orbital velocity</strong> → payload returns to Earth (suborbital)</li>
+<li>Speed <strong>= orbital</strong> → stable circular orbit</li>
+<li>Speed <strong>&gt; orbital, &lt; escape</strong> → elliptical orbit</li>
+<li>Speed <strong>= escape</strong> → parabolic escape</li>
+<li>Speed <strong>&gt; escape</strong> → hyperbolic escape</li>
+</ul>
+<hr/>
+<h2 id="5-applications">💼 5. Applications</h2>
+<table>
+<thead>
+<tr>
+<th>Use Case</th>
+<th>Trajectory Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Launching Satellites</td>
+<td>Circular/Elliptical</td>
+</tr>
+<tr>
+<td>Space Station Supply</td>
+<td>Elliptical/Rendezvous</td>
+</tr>
+<tr>
+<td>Moon Mission / Interplanetary</td>
+<td>Escape / Hyperbolic</td>
+</tr>
+<tr>
+<td>Returning to Earth</td>
+<td>Suborbital/Reentry</td>
+</tr>
+</tbody>
+</table>
+<hr/>
+<h2 id="deliverables-recap">📂 Deliverables Recap</h2>
+<ul>
+<li>✅ <strong>Markdown/Notebook</strong>: With equations, explanations, and Python</li>
+<li>✅ <strong>Numerical Simulation</strong>: Integrates motion under gravity</li>
+<li>✅ <strong>Trajectories</strong>: Suborbital, circular, elliptical, escape</li>
+<li>✅ <strong>Real-world Link</strong>: Relates directly to space missions</li>
+</ul>
 </div>
 </div><footer>
 <div aria-label="Footer Navigation" class="rst-footer-buttons" role="navigation">
