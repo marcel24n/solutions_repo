@@ -66,6 +66,14 @@
 <ul class="current">
 <li class="toctree-l2 current"><a class="reference internal current" href="#">Problem 1</a>
 <ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="#overview-of-the-task">🔍 Overview of the Task</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#python-simulation-code">⚙️ Python Simulation Code</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#explanation-of-the-pattern">📘 Explanation of the Pattern</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#deliverables-recap">📈 Deliverables Recap</a>
+</li>
 </ul>
 </li>
 </ul>
@@ -172,6 +180,97 @@
 <div class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
 <div class="section" itemprop="articleBody">
 <h1 id="problem-1">Problem 1</h1>
+<hr/>
+<h2 id="overview-of-the-task">🔍 Overview of the Task</h2>
+<p>We will:
+1. Choose a <strong>regular polygon</strong> (we’ll start with a square for simplicity).
+2. Place <strong>identical wave sources</strong> at each vertex.
+3. Use the wave function:
+   [
+   \psi_i(x, y, t) = A \cdot \sin(k r_i - \omega t + \phi)
+   ]
+   where:
+   - <span class="arithmatex">\( A \)</span>: Amplitude
+   - <span class="arithmatex">\( k = \frac{2\pi}{\lambda} \)</span>: Wave number
+   - <span class="arithmatex">\( \omega = 2\pi f \)</span>: Angular frequency
+   - <span class="arithmatex">\( r_i = \text{distance from source } i \text{ to point } (x, y) \)</span>
+   - <span class="arithmatex">\( \phi \)</span>: Initial phase (same for coherence)
+4. Superimpose all waves:
+   [
+   \Psi(x, y, t) = \sum_{i=1}^{N} \psi_i(x, y, t)
+   ]
+5. Visualize the resulting surface at a given time <span class="arithmatex">\( t \)</span>, showing <strong>constructive and destructive interference</strong>.</p>
+<hr/>
+<h2 id="python-simulation-code">⚙️ Python Simulation Code</h2>
+<p>Here’s a clean and interactive Python simulation:</p>
+<pre><code class="language-python">import numpy as np
+import matplotlib.pyplot as plt
+
+# Wave parameters
+A = 1.0                  # Amplitude
+λ = 2.0                  # Wavelength
+f = 1.0                  # Frequency
+k = 2 * np.pi / λ        # Wave number
+ω = 2 * np.pi * f        # Angular frequency
+φ = 0                    # Phase (coherent sources)
+t = 0                    # Fixed time snapshot
+
+# Grid setup
+x = np.linspace(-10, 10, 500)
+y = np.linspace(-10, 10, 500)
+X, Y = np.meshgrid(x, y)
+
+# Polygon source placement (Square)
+def regular_polygon_vertices(n_sides, radius=5.0):
+    angles = np.linspace(0, 2 * np.pi, n_sides, endpoint=False)
+    return np.array([[radius * np.cos(a), radius * np.sin(a)] for a in angles])
+
+# Number of sources and their positions
+N = 4  # Square
+sources = regular_polygon_vertices(N)
+
+# Superposition of waves from each source
+def wave_sum(X, Y, sources, t):
+    result = np.zeros_like(X)
+    for sx, sy in sources:
+        r = np.sqrt((X - sx)**2 + (Y - sy)**2)
+        result += A * np.sin(k * r - ω * t + φ)
+    return result
+
+# Calculate the wave pattern at time t
+Z = wave_sum(X, Y, sources, t)
+
+# Plotting the interference pattern
+plt.figure(figsize=(8, 8))
+plt.pcolormesh(X, Y, Z, shading='auto', cmap='seismic')
+plt.colorbar(label='Wave Amplitude')
+plt.scatter(sources[:,0], sources[:,1], color='black', label='Wave Sources')
+plt.title("Water Wave Interference Pattern (Square Configuration)")
+plt.xlabel("x (m)")
+plt.ylabel("y (m)")
+plt.legend()
+plt.axis('equal')
+plt.grid(False)
+plt.show()
+</code></pre>
+<hr/>
+<h2 id="explanation-of-the-pattern">📘 Explanation of the Pattern</h2>
+<ul>
+<li><strong>Constructive interference</strong>: Where waves from different sources arrive <em>in phase</em>, their amplitudes add up, forming <strong>bright ridges</strong> in the plot.</li>
+<li><strong>Destructive interference</strong>: Where they arrive <em>out of phase</em>, they cancel out, forming <strong>dark nodes</strong>.</li>
+<li>Due to symmetry (square in this case), the pattern reflects the polygon shape and produces <strong>radial and circular symmetry</strong>.</li>
+</ul>
+<hr/>
+<h2 id="deliverables-recap">📈 Deliverables Recap</h2>
+<p>✅ <strong>Markdown + Python Notebook</strong>: Done above<br/>
+✅ <strong>Mathematical model</strong>: Superposition of sinusoidal point waves<br/>
+✅ <strong>Simulation</strong>: Based on position + time snapshot<br/>
+✅ <strong>Visualization</strong>: Interference pattern with color map<br/>
+✅ <strong>Analysis</strong>:
+- Patterns are periodic
+- Sensitive to number of sources
+- Show clearly how wave interference works</p>
+<hr/>
 </div>
 </div><footer>
 <div aria-label="Footer Navigation" class="rst-footer-buttons" role="navigation">
