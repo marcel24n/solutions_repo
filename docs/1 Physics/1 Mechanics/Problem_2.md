@@ -1,6 +1,6 @@
 # Problem 2
 
-Here is a **full solution** to your **Forced Damped Pendulum** project — including theoretical derivation, dynamic analysis, real-world relevance, and a Python implementation with plots and exploration tools. Ready to copy into a Markdown or Jupyter notebook!
+
 
 ---
 
