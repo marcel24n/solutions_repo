@@ -172,6 +172,246 @@
 <div class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
 <div class="section" itemprop="articleBody">
 <h1 id="problem-1">Problem 1</h1>
+<hr/>
+<h1 id="measuring-gravitational-acceleration-g-using-a-simple-pendulum">🌍 Measuring Gravitational Acceleration (g) Using a Simple Pendulum</h1>
+<hr/>
+<h2 id="objective">🎯 Objective</h2>
+<p>To measure the local acceleration due to gravity (<strong>g</strong>) using a simple pendulum and rigorously analyze uncertainties in length and time measurements.</p>
+<hr/>
+<h2 id="materials">🧪 Materials</h2>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>String (L = 1–1.5 m)</td>
+<td>Uniform and inextensible</td>
+</tr>
+<tr>
+<td>Weight</td>
+<td>Small mass (e.g., keychain, washer, sugar bag)</td>
+</tr>
+<tr>
+<td>Stopwatch/Timer</td>
+<td>Preferably with 0.01 s resolution</td>
+</tr>
+<tr>
+<td>Ruler/Tape Measure</td>
+<td>With resolution of 1 mm (±0.0005 m uncertainty)</td>
+</tr>
+<tr>
+<td>Support</td>
+<td>Fixed horizontal bar, rod, or similar</td>
+</tr>
+</tbody>
+</table>
+<hr/>
+<h2 id="experimental-setup">⚙️ Experimental Setup</h2>
+<ul>
+<li>Attach the weight to the string and suspend it from a fixed point.</li>
+<li><strong>Measure the length <span class="arithmatex">\( L \)</span></strong> from the pivot to the center of mass of the bob.</li>
+</ul>
+<blockquote>
+<p><strong>Length (L):</strong> <code>L = 1.245 m</code><br/>
+<strong>Measurement resolution:</strong> 1 mm → <span class="arithmatex">\( u_L = \pm 0.0005 \, \text{m} \)</span></p>
+</blockquote>
+<hr/>
+<h2 id="data-collection">⏱️ Data Collection</h2>
+<ul>
+<li>Displace the pendulum by &lt;15° to ensure simple harmonic motion.</li>
+<li>Measure time for <strong>10 oscillations</strong>, 10 times.</li>
+<li>Use these to calculate the <strong>mean time</strong>, <strong>standard deviation</strong>, and <strong>uncertainty</strong>.</li>
+</ul>
+<h3 id="sample-table-of-measurements">🔢 Sample Table of Measurements</h3>
+<table>
+<thead>
+<tr>
+<th>Trial</th>
+<th>Time for 10 Oscillations <span class="arithmatex">\( T_{10} \)</span> [s]</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>22.43</td>
+</tr>
+<tr>
+<td>2</td>
+<td>22.47</td>
+</tr>
+<tr>
+<td>3</td>
+<td>22.45</td>
+</tr>
+<tr>
+<td>4</td>
+<td>22.46</td>
+</tr>
+<tr>
+<td>5</td>
+<td>22.44</td>
+</tr>
+<tr>
+<td>6</td>
+<td>22.46</td>
+</tr>
+<tr>
+<td>7</td>
+<td>22.48</td>
+</tr>
+<tr>
+<td>8</td>
+<td>22.43</td>
+</tr>
+<tr>
+<td>9</td>
+<td>22.45</td>
+</tr>
+<tr>
+<td>10</td>
+<td>22.46</td>
+</tr>
+</tbody>
+</table>
+<hr/>
+<h2 id="calculations">📊 Calculations</h2>
+<h3 id="1-mean-time-for-10-oscillations">1. <strong>Mean Time for 10 Oscillations</strong></h3>
+<div class="arithmatex">\[
+\bar{T}_{10} = \frac{1}{10} \sum_{i=1}^{10} T_{10,i} = 22.45 \, \text{s}
+\]</div>
+<h3 id="2-standard-deviation-s">2. <strong>Standard Deviation (s)</strong></h3>
+<div class="arithmatex">\[
+s = \sqrt{\frac{1}{n-1} \sum (T_{10,i} - \bar{T}_{10})^2} = 0.016 \, \text{s}
+\]</div>
+<h3 id="3-uncertainty-in-mean-time-u_bart">3. <strong>Uncertainty in Mean Time (u<span class="arithmatex">\(_{\bar{T}}\)</span>)</strong></h3>
+<div class="arithmatex">\[
+u_{\bar{T}} = \frac{s}{\sqrt{n}} = \frac{0.016}{\sqrt{10}} \approx 0.0051 \, \text{s}
+\]</div>
+<h3 id="4-period-of-one-oscillation">4. <strong>Period of One Oscillation</strong></h3>
+<div class="arithmatex">\[
+T = \frac{\bar{T}_{10}}{10} = 2.245 \, \text{s} \quad \text{with} \quad u_T = \frac{u_{\bar{T}}}{10} = 0.00051 \, \text{s}
+\]</div>
+<hr/>
+<h2 id="calculating-gravitational-acceleration-g">🌍 Calculating Gravitational Acceleration (g)</h2>
+<div class="arithmatex">\[
+g = \frac{4\pi^2 L}{T^2}
+\]</div>
+<div class="arithmatex">\[
+g = \frac{4\pi^2 \cdot 1.245}{(2.245)^2} \approx 9.755 \, \text{m/s}^2
+\]</div>
+<hr/>
+<h2 id="uncertainty-in-g">🧮 Uncertainty in g</h2>
+<h3 id="relative-uncertainties">Relative Uncertainties:</h3>
+<div class="arithmatex">\[
+\left(\frac{u_g}{g}\right)^2 = \left(\frac{u_L}{L}\right)^2 + \left(2 \cdot \frac{u_T}{T}\right)^2
+\]</div>
+<div class="arithmatex">\[
+\left(\frac{u_g}{g}\right)^2 = \left(\frac{0.0005}{1.245}\right)^2 + \left(2 \cdot \frac{0.00051}{2.245}\right)^2
+\]</div>
+<div class="arithmatex">\[
+u_g \approx 0.0101 \, \text{m/s}^2
+\]</div>
+<h3 id="final-value">Final Value:</h3>
+<div class="arithmatex">\[
+g = 9.755 \pm 0.010 \, \text{m/s}^2
+\]</div>
+<hr/>
+<h2 id="analysis">🧠 Analysis</h2>
+<h3 id="comparison-with-standard-value">✅ Comparison with Standard Value</h3>
+<table>
+<thead>
+<tr>
+<th>Location</th>
+<th>Standard g (m/s²)</th>
+<th>Measured g (m/s²)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Sea level</td>
+<td>9.80665</td>
+<td>9.755 ± 0.010</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Our value is <strong>within 0.5%</strong> of the standard value.</li>
+<li>Measurement uncertainty is <strong>well understood and controlled</strong>.</li>
+</ul>
+<hr/>
+<h2 id="discussion">🔍 Discussion</h2>
+<h3 id="1-sources-of-uncertainty">1. <strong>Sources of Uncertainty</strong></h3>
+<table>
+<thead>
+<tr>
+<th>Source</th>
+<th>Impact</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Length (L)</strong></td>
+<td>Low — high resolution of tape</td>
+</tr>
+<tr>
+<td><strong>Timing (T)</strong></td>
+<td>Medium — human reaction and stopwatch resolution</td>
+</tr>
+<tr>
+<td><strong>Swing Angle</strong></td>
+<td>Low — &lt;15° avoids nonlinearities</td>
+</tr>
+<tr>
+<td><strong>Air Resistance</strong></td>
+<td>Negligible for short durations</td>
+</tr>
+<tr>
+<td><strong>Pivot Friction</strong></td>
+<td>Minimal if smooth</td>
+</tr>
+</tbody>
+</table>
+<h3 id="2-measurement-resolution-effects">2. <strong>Measurement Resolution Effects</strong></h3>
+<ul>
+<li>A stopwatch with 0.01 s resolution contributes to uncertainty.</li>
+<li>Human reaction time introduces a <strong>systematic bias</strong> (~0.1–0.3 s).</li>
+<li>Repeating over <strong>10 oscillations</strong> helps minimize this.</li>
+</ul>
+<h3 id="3-suggestions-for-improvement">3. <strong>Suggestions for Improvement</strong></h3>
+<ul>
+<li>Use a <strong>photogate timer</strong> for more accurate timing.</li>
+<li>Use a <strong>longer string</strong> for longer periods, reducing relative timing error.</li>
+<li>Repeat for <strong>multiple lengths</strong> and verify <span class="arithmatex">\( T^2 \propto L \)</span>.</li>
+</ul>
+<hr/>
+<h2 id="final-results-summary">✅ Final Results Summary</h2>
+<table>
+<thead>
+<tr>
+<th>Quantity</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Pendulum Length <span class="arithmatex">\(L\)</span></td>
+<td>1.245 ± 0.0005 m</td>
+</tr>
+<tr>
+<td>Period <span class="arithmatex">\(T\)</span></td>
+<td>2.245 ± 0.00051 s</td>
+</tr>
+<tr>
+<td>Gravitational <span class="arithmatex">\(g\)</span></td>
+<td>9.755 ± 0.010 m/s²</td>
+</tr>
+</tbody>
+</table>
+<hr/>
 </div>
 </div><footer>
 <div aria-label="Footer Navigation" class="rst-footer-buttons" role="navigation">
