@@ -78,6 +78,42 @@
 <ul class="current">
 <li class="toctree-l2 current"><a class="reference internal current" href="#">Problem 1</a>
 <ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="#option-1-pseudocode-for-equivalent-resistance-using-graph-theory">🔧 Option 1: Pseudocode for Equivalent Resistance Using Graph Theory</a>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#goal">🎯 Goal:</a>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#key-concepts">✅ Key Concepts:</a>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#algorithm-overview">🧠 Algorithm Overview:</a>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#pseudocode">📜 Pseudocode:</a>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#option-2-python-implementation-using-networkx">🧪 Option 2: Python Implementation Using networkx</a>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#required">📦 Required:</a>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#full-python-code">🧾 Full Python Code:</a>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#example-1-simple-series">🧪 Example 1: Simple Series</a>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#example-2-parallel">🧪 Example 2: Parallel</a>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#example-3-nested-configuration">🧪 Example 3: Nested Configuration</a>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#handling-complex-circuits">⚙️ Handling Complex Circuits</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#efficiency-analysis">📈 Efficiency Analysis</a>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#time-complexity">Time Complexity:</a>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#potential-improvements">Potential Improvements:</a>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -172,6 +208,145 @@
 <div class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
 <div class="section" itemprop="articleBody">
 <h1 id="problem-1">Problem 1</h1>
+<h2 id="option-1-pseudocode-for-equivalent-resistance-using-graph-theory">🔧 <strong>Option 1: Pseudocode for Equivalent Resistance Using Graph Theory</strong></h2>
+<h3 id="goal">🎯 Goal:</h3>
+<p>Reduce a graph (circuit) until it’s a single equivalent resistance between two terminals.</p>
+<hr/>
+<h3 id="key-concepts">✅ <strong>Key Concepts:</strong></h3>
+<ul>
+<li>Nodes = Junctions</li>
+<li>Edges = Resistors (weighted by resistance)</li>
+<li>Series: Resistors on the same path (2 edges, same node degree)</li>
+<li>Parallel: Multiple edges between same two nodes or multiple paths between same two nodes (via cycles)</li>
+</ul>
+<hr/>
+<h3 id="algorithm-overview">🧠 <strong>Algorithm Overview:</strong></h3>
+<ol>
+<li><strong>Build the graph</strong> from input (nodes and resistors).</li>
+<li><strong>Repeat until only one equivalent resistance</strong> is left between the source and target:</li>
+<li>Detect and reduce <strong>series</strong> connections.</li>
+<li>Detect and reduce <strong>parallel</strong> connections.</li>
+<li>Return the total resistance between source and target.</li>
+</ol>
+<hr/>
+<h3 id="pseudocode">📜 <strong>Pseudocode:</strong></h3>
+<pre><code class="language-plaintext">Function calculate_equivalent_resistance(graph, source, target):
+    While graph has more than 2 nodes or multiple edges:
+        For each node in graph:
+            If degree(node) == 2:
+                neighbors = list of connected nodes
+                If only one path between neighbors:
+                    Combine series: R_eq = R1 + R2
+                    Replace with single edge
+            For all pairs of nodes (u, v):
+                If multiple edges exist:
+                    Combine parallel: R_eq = 1 / (1/R1 + 1/R2 + ...)
+                    Replace with single edge
+    Return resistance between source and target
+</code></pre>
+<hr/>
+<h2 id="option-2-python-implementation-using-networkx">🧪 <strong>Option 2: Python Implementation Using <code>networkx</code></strong></h2>
+<p>Let’s implement this step-by-step.</p>
+<h3 id="required">📦 Required:</h3>
+<pre><code class="language-bash">pip install networkx
+</code></pre>
+<h3 id="full-python-code">🧾 <strong>Full Python Code:</strong></h3>
+<pre><code class="language-python">import networkx as nx
+
+def combine_parallel(resistors):
+    """Combine resistors in parallel."""
+    return 1 / sum(1/r for r in resistors)
+
+def reduce_series(G):
+    changed = True
+    while changed:
+        changed = False
+        for node in list(G.nodes):
+            if node in G and G.degree(node) == 2 and node not in ('A', 'B'):
+                neighbors = list(G.neighbors(node))
+                if len(neighbors) == 2:
+                    u, v = neighbors
+                    r1 = G[u][node]['resistance']
+                    r2 = G[node][v]['resistance']
+                    new_r = r1 + r2
+                    G.add_edge(u, v, resistance=new_r)
+                    G.remove_node(node)
+                    changed = True
+                    break
+    return G
+
+def reduce_parallel(G):
+    for u, v in list(G.edges()):
+        parallel_edges = [data['resistance'] for key, data in G.get_edge_data(u, v).items()]
+        if len(parallel_edges) &gt; 1:
+            combined = combine_parallel(parallel_edges)
+            G.remove_edges_from(list(G.edges(u, v)))
+            G.add_edge(u, v, resistance=combined)
+    return G
+
+def calculate_equivalent_resistance(graph, source, target):
+    G = graph.copy()
+    while True:
+        before = G.number_of_edges()
+        G = reduce_series(G)
+        G = reduce_parallel(G)
+        after = G.number_of_edges()
+        if before == after:
+            break
+    return G[source][target]['resistance']
+</code></pre>
+<hr/>
+<h3 id="example-1-simple-series">🧪 <strong>Example 1: Simple Series</strong></h3>
+<pre><code class="language-python">G = nx.Graph()
+G.add_edge('A', '1', resistance=2)
+G.add_edge('1', 'B', resistance=3)
+print(calculate_equivalent_resistance(G, 'A', 'B'))  # Output: 5
+</code></pre>
+<hr/>
+<h3 id="example-2-parallel">🧪 <strong>Example 2: Parallel</strong></h3>
+<pre><code class="language-python">G = nx.MultiGraph()
+G.add_edge('A', 'B', resistance=2)
+G.add_edge('A', 'B', resistance=3)
+print(calculate_equivalent_resistance(G, 'A', 'B'))  # Output: 1.2
+</code></pre>
+<hr/>
+<h3 id="example-3-nested-configuration">🧪 <strong>Example 3: Nested Configuration</strong></h3>
+<p>Series + Parallel:</p>
+<pre><code class="language-python">G = nx.MultiGraph()
+G.add_edge('A', '1', resistance=1)
+G.add_edge('1', '2', resistance=2)
+G.add_edge('2', 'B', resistance=3)
+G.add_edge('A', 'B', resistance=2)
+
+# This will reduce parallel between:
+# (A - 1 - 2 - B) = 6 and (A - B) = 2
+# Parallel: 1 / (1/2 + 1/6) = 1.5
+
+print(calculate_equivalent_resistance(G, 'A', 'B'))  # Output: 1.5
+</code></pre>
+<hr/>
+<h2 id="handling-complex-circuits">⚙️ <strong>Handling Complex Circuits</strong></h2>
+<ul>
+<li>Detecting <strong>series</strong> paths via node degree = 2</li>
+<li>Detecting <strong>parallel</strong> connections via multiple paths (using <code>MultiGraph</code>)</li>
+<li>Recursive reduction until minimal graph remains</li>
+</ul>
+<hr/>
+<h2 id="efficiency-analysis">📈 Efficiency Analysis</h2>
+<h3 id="time-complexity">Time Complexity:</h3>
+<ul>
+<li>Series reduction: O(n)</li>
+<li>Parallel detection: O(m²) in worst-case (many edges between same nodes)</li>
+<li>Total ~ O(n²) for general graphs</li>
+</ul>
+<h3 id="potential-improvements">Potential Improvements:</h3>
+<ul>
+<li>Use <strong>Union-Find</strong> or <strong>Disjoint Set</strong> to detect cycles</li>
+<li>Use <strong>Kirchhoff’s laws</strong> with matrix solutions (e.g., Laplacian matrix + pseudoinverse for generalized approach)</li>
+<li>Use <strong>SPICE</strong>-like simulation engines for more complex non-linear or dependent components</li>
+</ul>
+<hr/>
+<p>Would you like this turned into a full command-line tool or visualization next?</p>
 </div>
 </div><footer>
 <div aria-label="Footer Navigation" class="rst-footer-buttons" role="navigation">
