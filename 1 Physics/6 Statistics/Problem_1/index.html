@@ -84,6 +84,38 @@
 <ul class="current">
 <li class="toctree-l2 current"><a class="reference internal current" href="#">Problem 1</a>
 <ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="#exploring-the-central-limit-theorem-through-simulations">📘 Exploring the Central Limit Theorem Through Simulations</a>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#motivation">✨ Motivation</a>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#simulation-plan">🔬 Simulation Plan</a>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#1-population-distributions">🧪 1. Population Distributions</a>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#2-sampling-and-visualization">📈 2. Sampling and Visualization</a>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#3-parameter-exploration">⚙️ 3. Parameter Exploration</a>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#4-practical-applications">🌍 4. Practical Applications</a>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#python-implementation-jupyter-notebook-script">🐍 Python Implementation (Jupyter Notebook / Script)</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#observations-discussion">📊 Observations &amp; Discussion</a>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#convergence-behavior">🎯 Convergence Behavior</a>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#spread-of-sample-means">🧮 Spread of Sample Means</a>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#real-world-implications">🏁 Real-World Implications</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#conclusion">💡 Conclusion</a>
+</li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../Problem_2/">Problem 2</a>
@@ -172,6 +204,141 @@
 <div class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
 <div class="section" itemprop="articleBody">
 <h1 id="problem-1">Problem 1</h1>
+<p>This is a fantastic exploration of the <strong>Central Limit Theorem (CLT)</strong>—and simulations make the theory <em>visually intuitive and mathematically grounded</em>. Below, I’ve prepared a <strong>structured Markdown writeup</strong> along with <strong>Python simulation code</strong> that walks through each part of the task:</p>
+<hr/>
+<h2 id="exploring-the-central-limit-theorem-through-simulations">📘 Exploring the Central Limit Theorem Through Simulations</h2>
+<h3 id="motivation">✨ Motivation</h3>
+<p>The Central Limit Theorem (CLT) states that the <strong>sampling distribution of the sample mean becomes approximately normal</strong> as the <strong>sample size increases</strong>, regardless of the original population distribution (under some mild conditions like finite variance). This property is fundamental in inferential statistics and enables confidence intervals, hypothesis tests, and more.</p>
+<hr/>
+<h2 id="simulation-plan">🔬 Simulation Plan</h2>
+<h3 id="1-population-distributions">🧪 1. Population Distributions</h3>
+<p>We will use the following population distributions:
+- <strong>Uniform</strong>: Flat distribution between 0 and 1.
+- <strong>Exponential</strong>: Right-skewed, λ = 1.
+- <strong>Binomial</strong>: Discrete, n=10, p=0.5.</p>
+<h3 id="2-sampling-and-visualization">📈 2. Sampling and Visualization</h3>
+<p>For each population:
+- Draw <code>n_samples</code> (e.g., 1000) samples of size [5, 10, 30, 50].
+- Compute the mean of each sample.
+- Plot histograms of these sample means to visualize convergence to a normal distribution.</p>
+<h3 id="3-parameter-exploration">⚙️ 3. Parameter Exploration</h3>
+<p>We'll explore:
+- The effect of increasing sample size on normality.
+- The effect of population variance on the <strong>spread</strong> of the sampling distribution.</p>
+<h3 id="4-practical-applications">🌍 4. Practical Applications</h3>
+<p>The CLT is essential in:
+- Estimating <strong>population parameters</strong> when the population distribution is unknown.
+- <strong>Quality control</strong> and process monitoring.
+- <strong>Finance</strong>: modeling portfolio returns.</p>
+<hr/>
+<h2 id="python-implementation-jupyter-notebook-script">🐍 Python Implementation (Jupyter Notebook / Script)</h2>
+<pre><code class="language-python">import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Settings
+np.random.seed(42)
+sample_sizes = [5, 10, 30, 50]
+n_samples = 1000
+
+# Distribution generators
+distributions = {
+    "Uniform [0, 1]": lambda size: np.random.uniform(0, 1, size),
+    "Exponential (λ=1)": lambda size: np.random.exponential(1, size),
+    "Binomial (n=10, p=0.5)": lambda size: np.random.binomial(n=10, p=0.5, size=size)
+}
+
+# Plotting function
+def plot_sampling_distribution(dist_name, generator):
+    plt.figure(figsize=(16, 10))
+    for i, n in enumerate(sample_sizes):
+        means = [np.mean(generator(n)) for _ in range(n_samples)]
+        plt.subplot(2, 2, i + 1)
+        sns.histplot(means, kde=True, bins=30, stat="density", color="skyblue")
+        plt.title(f"{dist_name} — Sample Size {n}")
+        plt.xlabel("Sample Mean")
+        plt.ylabel("Density")
+    plt.tight_layout()
+    plt.show()
+
+# Run simulation and plot
+for name, dist_func in distributions.items():
+    print(f"\n🔍 Sampling from {name}")
+    plot_sampling_distribution(name, dist_func)
+</code></pre>
+<hr/>
+<h2 id="observations-discussion">📊 Observations &amp; Discussion</h2>
+<h3 id="convergence-behavior">🎯 Convergence Behavior</h3>
+<table>
+<thead>
+<tr>
+<th>Distribution</th>
+<th>Skewed?</th>
+<th>Converges Quickly?</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Uniform</td>
+<td>No</td>
+<td>Yes</td>
+<td>Already symmetric.</td>
+</tr>
+<tr>
+<td>Exponential</td>
+<td>Yes</td>
+<td>Slower</td>
+<td>Needs larger sample size for normality.</td>
+</tr>
+<tr>
+<td>Binomial</td>
+<td>No</td>
+<td>Medium</td>
+<td>Discrete, but symmetric around mean.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="spread-of-sample-means">🧮 Spread of Sample Means</h3>
+<ul>
+<li>As <strong>sample size increases</strong>, the <strong>spread (standard deviation)</strong> of the sampling distribution <strong>decreases</strong>.</li>
+<li>This follows the rule:<br/>
+  [
+  \text{SD of sampling distribution} = \frac{\sigma}{\sqrt{n}}
+  ]</li>
+</ul>
+<hr/>
+<h2 id="real-world-implications">🏁 Real-World Implications</h2>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Application</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Medicine</td>
+<td>Estimating average treatment effects.</td>
+</tr>
+<tr>
+<td>Manufacturing</td>
+<td>Monitoring variation in production lines.</td>
+</tr>
+<tr>
+<td>Finance</td>
+<td>Modeling returns of investment portfolios.</td>
+</tr>
+<tr>
+<td>Social Science</td>
+<td>Analyzing survey results, polling predictions.</td>
+</tr>
+</tbody>
+</table>
+<hr/>
+<h2 id="conclusion">💡 Conclusion</h2>
+<p>Through simulation, we confirmed that <strong>the CLT holds across various population types</strong> and sample sizes. Larger samples lead to a tighter and more symmetric distribution of the mean. This powerful result underpins much of classical statistics and justifies using normal-based methods even when data is not normally distributed.</p>
+<hr/>
 </div>
 </div><footer>
 <div aria-label="Footer Navigation" class="rst-footer-buttons" role="navigation">
