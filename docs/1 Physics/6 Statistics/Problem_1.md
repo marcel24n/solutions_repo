@@ -1,6 +1,6 @@
 # Problem 1
 
-This is a fantastic exploration of the **Central Limit Theorem (CLT)**—and simulations make the theory *visually intuitive and mathematically grounded*. Below, I’ve prepared a **structured Markdown writeup** along with **Python simulation code** that walks through each part of the task:
+
 
 ---
 
