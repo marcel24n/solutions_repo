@@ -172,6 +172,168 @@
 <div class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
 <div class="section" itemprop="articleBody">
 <h1 id="problem-2">Problem 2</h1>
+<hr/>
+<h1 id="estimating-using-monte-carlo-methods">🧮 Estimating π Using Monte Carlo Methods</h1>
+<hr/>
+<h2 id="overview">🎯 Overview</h2>
+<p>We’ll estimate π using <strong>two Monte Carlo methods</strong>:
+1. <strong>Circle-based Monte Carlo Method</strong> (Geometric Probability)
+2. <strong>Buffon’s Needle Experiment</strong> (Classic probability problem)</p>
+<p>We’ll simulate, visualize, and compare the two methods based on <strong>accuracy</strong>, <strong>convergence</strong>, and <strong>computational performance</strong>.</p>
+<hr/>
+<h2 id="part-1-estimating-using-a-circle">📐 Part 1: Estimating π Using a Circle</h2>
+<h3 id="theoretical-foundation">📘 Theoretical Foundation</h3>
+<ul>
+<li>Consider a <strong>unit circle</strong> (radius = 1) centered at the origin.</li>
+<li>Enclose it in a square of side length 2 (from -1 to 1 in both x and y).</li>
+<li>Area of the circle = π·r² = π (since r = 1)</li>
+<li>Area of the square = 4</li>
+</ul>
+<p>So, the <strong>ratio</strong> of points inside the circle to all points inside the square ≈ Area of Circle / Area of Square = π / 4<br/>
+Thus,
+[
+\pi \approx 4 \times \frac{\text{Points Inside Circle}}{\text{Total Points}}
+]</p>
+<hr/>
+<h3 id="simulation-visualization">🧪 Simulation &amp; Visualization</h3>
+<pre><code class="language-python">import numpy as np
+import matplotlib.pyplot as plt
+
+def estimate_pi_circle(n_points=10000, visualize=True):
+    x = np.random.uniform(-1, 1, n_points)
+    y = np.random.uniform(-1, 1, n_points)
+    inside = x**2 + y**2 &lt;= 1
+
+    pi_estimate = 4 * np.sum(inside) / n_points
+
+    if visualize:
+        plt.figure(figsize=(6, 6))
+        plt.scatter(x[inside], y[inside], color='blue', s=1, label='Inside Circle')
+        plt.scatter(x[~inside], y[~inside], color='red', s=1, label='Outside Circle')
+        plt.title(f"Monte Carlo π Estimation\nn = {n_points}, π ≈ {pi_estimate:.6f}")
+        plt.legend()
+        plt.gca().set_aspect('equal')
+        plt.show()
+
+    return pi_estimate
+</code></pre>
+<hr/>
+<h2 id="part-2-estimating-using-buffons-needle">🪵 Part 2: Estimating π Using Buffon’s Needle</h2>
+<h3 id="theoretical-foundation_1">📘 Theoretical Foundation</h3>
+<ul>
+<li>Drop a needle of length <strong>ℓ</strong> onto a floor with <strong>parallel lines</strong> spaced <strong>d</strong> apart.</li>
+<li>If <strong>ℓ ≤ d</strong>, the probability that the needle crosses a line is:
+[
+P = \frac{2 \ell}{\pi d}
+]
+Rearranged to estimate π:
+[
+\pi \approx \frac{2 \ell \cdot N}{d \cdot C}
+]
+Where:</li>
+<li><span class="arithmatex">\(N\)</span>: total number of drops</li>
+<li><span class="arithmatex">\(C\)</span>: number of times needle crosses a line</li>
+</ul>
+<hr/>
+<h3 id="simulation-visualization_1">🧪 Simulation &amp; Visualization</h3>
+<pre><code class="language-python">def estimate_pi_buffon(n_drops=10000, needle_length=1.0, line_distance=2.0, visualize=True):
+    crossings = 0
+    x_vals = []
+    theta_vals = []
+
+    for _ in range(n_drops):
+        x = np.random.uniform(0, line_distance / 2)
+        theta = np.random.uniform(0, np.pi / 2)
+        if x &lt;= (needle_length / 2) * np.sin(theta):
+            crossings += 1
+        x_vals.append(x)
+        theta_vals.append(theta)
+
+    if crossings == 0:
+        return np.inf  # Avoid divide by zero
+
+    pi_estimate = (2 * needle_length * n_drops) / (line_distance * crossings)
+
+    if visualize:
+        plt.figure(figsize=(8, 4))
+        for i in range(100):
+            x0 = np.random.uniform(0, 5)
+            y0 = np.random.uniform(0, 5)
+            theta = np.random.uniform(0, np.pi)
+            x1 = x0 + (needle_length / 2) * np.cos(theta)
+            x2 = x0 - (needle_length / 2) * np.cos(theta)
+            y1 = y0 + (needle_length / 2) * np.sin(theta)
+            y2 = y0 - (needle_length / 2) * np.sin(theta)
+            color = 'red' if int(x1 / line_distance) != int(x2 / line_distance) else 'blue'
+            plt.plot([x1, x2], [y1, y2], color=color)
+
+        for i in range(7):
+            plt.axvline(i * line_distance, color='black', linewidth=0.5)
+
+        plt.title(f"Buffon’s Needle Simulation\nπ ≈ {pi_estimate:.6f}")
+        plt.xlim(0, 5)
+        plt.ylim(0, 5)
+        plt.gca().set_aspect('equal')
+        plt.show()
+
+    return pi_estimate
+</code></pre>
+<hr/>
+<h2 id="convergence-analysis">📊 Convergence Analysis</h2>
+<pre><code class="language-python">def convergence_analysis(estimator_func, sample_sizes, label):
+    estimates = []
+    for n in sample_sizes:
+        est = estimator_func(n, visualize=False)
+        estimates.append(est)
+
+    plt.plot(sample_sizes, estimates, marker='o')
+    plt.axhline(np.pi, color='green', linestyle='--', label='True π')
+    plt.xlabel('Number of Samples')
+    plt.ylabel('Estimated π')
+    plt.title(f'Convergence of π Estimate — {label}')
+    plt.legend()
+    plt.grid(True)
+    plt.show()
+</code></pre>
+<h3 id="run-convergence-test">Run Convergence Test</h3>
+<pre><code class="language-python">sizes = [100, 500, 1000, 5000, 10000, 50000]
+convergence_analysis(estimate_pi_circle, sizes, "Circle Method")
+convergence_analysis(estimate_pi_buffon, sizes, "Buffon’s Needle")
+</code></pre>
+<hr/>
+<h2 id="results-discussion">📈 Results &amp; Discussion</h2>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Estimation Accuracy</th>
+<th>Convergence Rate</th>
+<th>Computational Simplicity</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Circle-Based Method</td>
+<td>High (with enough points)</td>
+<td>√(n) slow convergence</td>
+<td>Very simple and fast</td>
+</tr>
+<tr>
+<td>Buffon’s Needle</td>
+<td>Slower and more variable</td>
+<td>Requires more trials</td>
+<td>Geometrically rich but noisier</td>
+</tr>
+</tbody>
+</table>
+<hr/>
+<h2 id="final-thoughts">🧠 Final Thoughts</h2>
+<ul>
+<li>The <strong>circle method</strong> is more commonly used due to its simplicity and consistent convergence.</li>
+<li><strong>Buffon’s needle</strong> is historically important and more visually intriguing, but less efficient.</li>
+<li>Both methods showcase how <strong>randomness can solve deterministic problems</strong>—a core principle of Monte Carlo methods.</li>
+</ul>
+<hr/>
 </div>
 </div><footer>
 <div aria-label="Footer Navigation" class="rst-footer-buttons" role="navigation">
