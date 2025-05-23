@@ -125,6 +125,7 @@ plt.tight_layout()
 plt.show()
 ```
 
+![alt text](output2.png)
 ---
 
 ## 📊 Deliverables Recap
