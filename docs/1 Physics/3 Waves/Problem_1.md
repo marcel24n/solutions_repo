@@ -83,6 +83,9 @@ plt.grid(False)
 plt.show()
 ```
 
+
+![alt text](output4.png)
+
 ---
 
 ## 📘 Explanation of the Pattern
