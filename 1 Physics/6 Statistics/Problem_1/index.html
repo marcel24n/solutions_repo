@@ -265,6 +265,34 @@ for name, dist_func in distributions.items():
     print(f"\n🔍 Sampling from {name}")
     plot_sampling_distribution(name, dist_func)
 </code></pre>
+<p>Generates 1000 sample means for each distribution at each of 4 sample sizes (n = 5, 10, 30, 50).</p>
+<p>Uses:</p>
+<p>Uniform distribution: np.random.uniform(0, 1, size)</p>
+<p>Exponential distribution: np.random.exponential(1, size)</p>
+<p>Binomial distribution: np.random.binomial(10, 0.5, size)</p>
+<p>Plots histograms of sample means with density curves (via Seaborn) in a 2x2 subplot layout.</p>
+<p>🔍 Expected Output (Summary)
+For each distribution, you'd see a 2x2 grid of histograms showing sample means:</p>
+<ol>
+<li>Uniform [0, 1]
+For n=5: Spread out and slightly flat.</li>
+</ol>
+<p>n=10: A bit more concentrated.</p>
+<p>n=30, n=50: Strong bell shape (normal-looking), centered at 0.5.</p>
+<ol>
+<li>Exponential (λ=1)
+For n=5: Right-skewed (long tail).</li>
+</ol>
+<p>n=10: Still skewed.</p>
+<p>n=30: Starting to normalize.</p>
+<p>n=50: Almost bell-shaped, but still slightly skewed.</p>
+<ol>
+<li>Binomial (n=10, p=0.5)
+Population mean = 5</li>
+</ol>
+<p>Since this is already somewhat symmetric:</p>
+<p>n=5 shows decent bell shape.</p>
+<p>n=10–50 become increasingly smooth and centered tightly around 5.</p>
 <hr/>
 <h2 id="observations-discussion">📊 Observations &amp; Discussion</h2>
 <h3 id="convergence-behavior">🎯 Convergence Behavior</h3>
