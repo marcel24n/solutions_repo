@@ -76,6 +76,45 @@ for name, dist_func in distributions.items():
     print(f"\n🔍 Sampling from {name}")
     plot_sampling_distribution(name, dist_func)
 ```
+Generates 1000 sample means for each distribution at each of 4 sample sizes (n = 5, 10, 30, 50).
+
+Uses:
+
+Uniform distribution: np.random.uniform(0, 1, size)
+
+Exponential distribution: np.random.exponential(1, size)
+
+Binomial distribution: np.random.binomial(10, 0.5, size)
+
+Plots histograms of sample means with density curves (via Seaborn) in a 2x2 subplot layout.
+
+🔍 Expected Output (Summary)
+For each distribution, you'd see a 2x2 grid of histograms showing sample means:
+
+1. Uniform [0, 1]
+For n=5: Spread out and slightly flat.
+
+n=10: A bit more concentrated.
+
+n=30, n=50: Strong bell shape (normal-looking), centered at 0.5.
+
+2. Exponential (λ=1)
+For n=5: Right-skewed (long tail).
+
+n=10: Still skewed.
+
+n=30: Starting to normalize.
+
+n=50: Almost bell-shaped, but still slightly skewed.
+
+3. Binomial (n=10, p=0.5)
+Population mean = 5
+
+Since this is already somewhat symmetric:
+
+n=5 shows decent bell shape.
+
+n=10–50 become increasingly smooth and centered tightly around 5.
 
 ---
 
