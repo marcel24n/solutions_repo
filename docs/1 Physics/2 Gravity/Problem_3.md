@@ -111,6 +111,18 @@ plt.tight_layout()
 plt.show()
 ```
 
+
+![alt text](output3.png)
+
+Here's the plot showing different payload trajectories from a 300 km altitude, based on varying initial velocities:
+
+Suborbital: Falls back to Earth.
+
+Circular: Achieves stable orbit.
+
+Elliptical: Enters an elongated orbit.
+
+Escape: Exceeds escape velocity and leaves Earth's gravity.
 ---
 
 ## 📘 4. Key Observations
