@@ -74,7 +74,11 @@ for i in range(steps):
     velocities[i] = v
 ```
 
----
+
+![alt text](output5.png)
+ 
+ The simulation attempted to model a charged particle's motion in a magnetic field, but it ran into a numerical overflow due to the extremely high acceleration. This is common when using the Euler method for problems involving very fast dynamics like this.
+
 
 ## 📊 4. **Visualization**
 
@@ -146,3 +150,4 @@ Try modifying:
 
 ---
 
+ssss
