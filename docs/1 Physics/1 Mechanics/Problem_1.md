@@ -95,6 +95,8 @@ plt.grid(True)
 plt.show()
 ```
 
+
+![alt text](<output 11.png>)
 ---
 
 
