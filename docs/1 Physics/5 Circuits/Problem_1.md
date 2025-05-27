@@ -102,6 +102,13 @@ def calculate_equivalent_resistance(graph, source, target):
     return G[source][target]['resistance']
 ```
 
+
+
+🧾 Output:
+
+
+Equivalent Resistance: 3.60 ohms
+
 ---
 
 ### 🧪 **Example 1: Simple Series**
@@ -164,4 +171,3 @@ print(calculate_equivalent_resistance(G, 'A', 'B'))  # Output: 1.5
 
 ---
 
-Would you like this turned into a full command-line tool or visualization next?
