@@ -60,6 +60,16 @@ def estimate_pi_circle(n_points=10000, visualize=True):
     return pi_estimate
 ```
 
+📈 Output:
+Estimated π value: 3.1412
+
+The scatter plot was displayed showing:
+
+Blue dots: Points inside the unit circle
+
+Red dots: Points outside the unit circle
+
+Title with the estimation result
 ---
 
 ## 🪵 Part 2: Estimating π Using Buffon’s Needle
@@ -127,6 +137,10 @@ def estimate_pi_buffon(n_drops=10000, needle_length=1.0, line_distance=2.0, visu
     return pi_estimate
 ```
 
+
+![alt text](<output 9.png>)
+
+The Monte Carlo simulation estimated π as approximately 3.152 using 10,000 random points. The visualization shows which points fell inside (blue) and outside (red) the unit circle.
 ---
 
 ## 📊 Convergence Analysis
@@ -147,6 +161,10 @@ def convergence_analysis(estimator_func, sample_sizes, label):
     plt.grid(True)
     plt.show()
 ```
+
+![alt text](<output 10.png>)
+
+Here's the convergence plot for the Monte Carlo π estimation method using the circle method. As the number of samples increases, the estimated value of π approaches the true value (~3.14159), illustrating the power of probabilistic estimation.
 
 ### Run Convergence Test
 
