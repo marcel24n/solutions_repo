@@ -95,6 +95,8 @@ plt.grid(True)
 plt.show()
 ```
 
+
+![alt text](output12.png)
 ### 3D Trajectory (if motion in z is involved):
 
 ```python
@@ -109,6 +111,8 @@ ax.set_ylabel('Y (m)')
 ax.set_zlabel('Z (m)')
 plt.show()
 ```
+
+![alt text](output13.png)
 
 ---
 
