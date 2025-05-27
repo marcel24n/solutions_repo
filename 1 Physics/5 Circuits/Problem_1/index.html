@@ -295,6 +295,8 @@ def calculate_equivalent_resistance(graph, source, target):
             break
     return G[source][target]['resistance']
 </code></pre>
+<p>🧾 Output:</p>
+<p>Equivalent Resistance: 3.60 ohms</p>
 <hr/>
 <h3 id="example-1-simple-series">🧪 <strong>Example 1: Simple Series</strong></h3>
 <pre><code class="language-python">G = nx.Graph()
@@ -346,7 +348,6 @@ print(calculate_equivalent_resistance(G, 'A', 'B'))  # Output: 1.5
 <li>Use <strong>SPICE</strong>-like simulation engines for more complex non-linear or dependent components</li>
 </ul>
 <hr/>
-<p>Would you like this turned into a full command-line tool or visualization next?</p>
 </div>
 </div><footer>
 <div aria-label="Footer Navigation" class="rst-footer-buttons" role="navigation">
