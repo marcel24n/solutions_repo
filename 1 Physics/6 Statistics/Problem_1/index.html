@@ -264,7 +264,17 @@ def plot_sampling_distribution(dist_name, generator):
 for name, dist_func in distributions.items():
     print(f"\n🔍 Sampling from {name}")
     plot_sampling_distribution(name, dist_func)
+
+
 </code></pre>
+<p><img alt="alt text" src="../output%206.png"/></p>
+<p><img alt="alt text" src="../output%207.png"/></p>
+<p><img alt="alt text" src="../output%208.png"/></p>
+<p>Here are the sampling distribution plots for:</p>
+<p>Uniform [0, 1]</p>
+<p>Exponential (λ=1)</p>
+<p>Binomial (n=10, p=0.5)</p>
+<p>As the sample size increases, the distribution of sample means becomes more bell-shaped and concentrated around the true mean, illustrating the Central Limit Theorem.</p>
 <p>Generates 1000 sample means for each distribution at each of 4 sample sizes (n = 5, 10, 30, 50).</p>
 <p>Uses:</p>
 <p>Uniform distribution: np.random.uniform(0, 1, size)</p>
